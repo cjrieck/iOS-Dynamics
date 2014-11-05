@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Clayton Rieck. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface RootViewController : UIViewController
 
 

@@ -38,6 +38,7 @@
 		3665BF791A0AAD7000FC0C27 /* iOS-DynamicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-DynamicsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3665BF7E1A0AAD7000FC0C27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3665BF7F1A0AAD7000FC0C27 /* iOS_DynamicsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_DynamicsTests.m; sourceTree = "<group>"; };
+		3665BF8B1A0AAEDF00FC0C27 /* iOSDynamicsPrefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSDynamicsPrefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,10 +80,8 @@
 		3665BF621A0AAD7000FC0C27 /* iOS-Dynamics */ = {
 			isa = PBXGroup;
 			children = (
-				3665BF671A0AAD7000FC0C27 /* AppDelegate.h */,
-				3665BF681A0AAD7000FC0C27 /* AppDelegate.m */,
-				3665BF6A1A0AAD7000FC0C27 /* RootViewController.h */,
-				3665BF6B1A0AAD7000FC0C27 /* RootViewController.m */,
+				3665BF891A0AAEA500FC0C27 /* Application */,
+				3665BF8A1A0AAEAB00FC0C27 /* View Controllers */,
 				3665BF701A0AAD7000FC0C27 /* Images.xcassets */,
 				3665BF721A0AAD7000FC0C27 /* LaunchScreen.xib */,
 				3665BF631A0AAD7000FC0C27 /* Supporting Files */,
@@ -95,8 +94,9 @@
 			children = (
 				3665BF641A0AAD7000FC0C27 /* Info.plist */,
 				3665BF651A0AAD7000FC0C27 /* main.m */,
+				3665BF8B1A0AAEDF00FC0C27 /* iOSDynamicsPrefix.pch */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		3665BF7C1A0AAD7000FC0C27 /* iOS-DynamicsTests */ = {
@@ -113,7 +113,25 @@
 			children = (
 				3665BF7E1A0AAD7000FC0C27 /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3665BF891A0AAEA500FC0C27 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				3665BF671A0AAD7000FC0C27 /* AppDelegate.h */,
+				3665BF681A0AAD7000FC0C27 /* AppDelegate.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		3665BF8A1A0AAEAB00FC0C27 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3665BF6A1A0AAD7000FC0C27 /* RootViewController.h */,
+				3665BF6B1A0AAD7000FC0C27 /* RootViewController.m */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,7 +349,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "iOS-Dynamics/Info.plist";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS-Dynamics/Supporting Files/iOSDynamicsPrefix.pch";
+				INFOPLIST_FILE = "iOS-Dynamics/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -341,7 +361,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "iOS-Dynamics/Info.plist";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS-Dynamics/Supporting Files/iOSDynamicsPrefix.pch";
+				INFOPLIST_FILE = "iOS-Dynamics/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -359,7 +381,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "iOS-DynamicsTests/Info.plist";
+				INFOPLIST_FILE = "iOS-DynamicsTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS-Dynamics.app/iOS-Dynamics";
@@ -374,7 +396,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "iOS-DynamicsTests/Info.plist";
+				INFOPLIST_FILE = "iOS-DynamicsTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS-Dynamics.app/iOS-Dynamics";
