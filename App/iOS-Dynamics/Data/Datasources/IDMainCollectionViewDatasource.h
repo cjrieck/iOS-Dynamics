@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Clayton Rieck. All rights reserved.
 //
 
-@interface IDMainCollectionViewDatasource : NSObject
+@interface IDMainCollectionViewDatasource : NSObject <UICollectionViewDataSource>
 
 @property (weak, nonatomic) UICollectionView *mainDataCollectionView;
 

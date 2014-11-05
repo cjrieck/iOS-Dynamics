@@ -10,7 +10,7 @@
 
 static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
-@interface IDMainCollectionViewDatasource () <UICollectionViewDataSource>
+@interface IDMainCollectionViewDatasource ()
 
 @end
 
@@ -35,7 +35,8 @@ static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [[UICollectionViewCell alloc] init];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor redColor];
     return cell;
 }
 

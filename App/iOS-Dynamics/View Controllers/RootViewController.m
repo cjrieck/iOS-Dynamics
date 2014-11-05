@@ -19,24 +19,28 @@
 
 @implementation RootViewController
 
+- (instancetype)init {
+    self = [super init];
+    if ( self ) {
+        _mainCollectionViewDataSource = [[IDMainCollectionViewDatasource alloc] init];
+    }
+    return self;
+}
+
 - (void)loadView {
     [super loadView];
     
-    UICollectionViewLayout *mainCollectionViewLayout = [[UICollectionViewLayout alloc] init];
+    UICollectionViewFlowLayout *mainCollectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
+    mainCollectionViewLayout.itemSize = CGSizeMake(30, 30);
+    
     UICollectionView *mainMenuCollectionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:mainCollectionViewLayout];
-    // TODO: Set delegate (may not be needed) and datasource
+    mainMenuCollectionView.backgroundColor = [UIColor whiteColor]; // maybe put a gradient here?
+    
+    self.mainCollectionViewDataSource.mainDataCollectionView = mainMenuCollectionView;
+    
+    mainMenuCollectionView.dataSource = self.mainCollectionViewDataSource;
     [self.view addSubview:mainMenuCollectionView];
     _mainMenuCollectionView = mainMenuCollectionView;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor]; // maybe put gradient here?
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
