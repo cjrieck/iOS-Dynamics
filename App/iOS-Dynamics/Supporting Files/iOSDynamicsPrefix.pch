@@ -9,6 +9,7 @@
 #ifndef iOS_Dynamics_iOSDynamicsPrefix_pch
 #define iOS_Dynamics_iOSDynamicsPrefix_pch
 
+@import Foundation;
 @import UIKit;
 
 #endif
