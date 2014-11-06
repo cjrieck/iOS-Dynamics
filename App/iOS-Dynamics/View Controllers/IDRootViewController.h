@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Clayton Rieck. All rights reserved.
 //
 
-@interface RootViewController : UIViewController
+@interface IDRootViewController : UIViewController
 
 
 @end

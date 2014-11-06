@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Clayton Rieck. All rights reserved.
 //
 
-#import "RootViewController.h"
+#import "IDRootViewController.h"
 #import "IDMainCollectionViewDatasource.h"
+#import "IDSpringFlowLayout.h"
 
-@interface RootViewController ()
+@interface IDRootViewController ()
 
 @property (strong, nonatomic) IDMainCollectionViewDatasource *mainCollectionViewDataSource;
 
@@ -17,7 +18,7 @@
 
 @end
 
-@implementation RootViewController
+@implementation IDRootViewController
 
 - (instancetype)init {
     self = [super init];
@@ -28,13 +29,11 @@
 }
 
 - (void)loadView {
-    [super loadView];
+    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    UICollectionViewFlowLayout *mainCollectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-    mainCollectionViewLayout.itemSize = CGSizeMake(30, 30);
-    
+    IDSpringFlowLayout *mainCollectionViewLayout = [[IDSpringFlowLayout alloc] init];
     UICollectionView *mainMenuCollectionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:mainCollectionViewLayout];
-    mainMenuCollectionView.backgroundColor = [UIColor whiteColor]; // maybe put a gradient here?
+    mainMenuCollectionView.backgroundColor = [UIColor blackColor]; // maybe put a gradient here?
     
     self.mainCollectionViewDataSource.mainDataCollectionView = mainMenuCollectionView;
     

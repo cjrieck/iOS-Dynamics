@@ -30,13 +30,13 @@ static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 6; // TODO: Figure this out
+    return 500; // TODO: Figure this out
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor];
+    cell.backgroundColor = [UIColor colorWithRed:0.227 green:0.340 blue:1.000 alpha:1.000];
     return cell;
 }
 
