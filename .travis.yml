@@ -2,3 +2,7 @@ language: objective-c
 xcode_project: App/iOS-Dynamics.xcodeproj
 xcode_scheme: iOS-Dynamics
 xcode_sdk: iphonesimulator
+
+before_install:
+    - brew update
+    - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
