@@ -1,3 +1,4 @@
 language: objective-c
 xcode_project: App/iOS-Dynamics.xcodeproj
 xcode_scheme: iOS-Dynamics
+xcode_sdk: iphonesimulator
