@@ -24,11 +24,9 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
 - (instancetype)init {
     self = [super init];
     if ( self ) {
-        NSLog(@"init layout");
-        self.minimumInteritemSpacing = 10.0f;
         self.minimumLineSpacing = 10.0f;
-        self.itemSize = CGSizeMake(90, 44);
-        self.sectionInset = UIEdgeInsetsMake(20, 10, 10, 10);
+        self.itemSize = CGSizeMake(90, 90);
+        self.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
         
         _springAnimator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self];
         _visibleIndexPaths = [NSMutableSet set];
@@ -47,8 +45,8 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
     
     // Create an array of behaviors that aren't visible using the set of visible index path
     NSArray *hiddenBehaviors = [self.springAnimator.behaviors filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(UIAttachmentBehavior *behavior, NSDictionary *bindings){
-        BOOL currentlyVisible = [itemsInVisibleRectSet member:[[[behavior items] lastObject] indexPath]] == NO;
-        return !currentlyVisible;
+        BOOL currentlyVisible = [itemsInVisibleRectSet containsObject:[[[behavior items] firstObject] indexPath]] == NO;
+        return currentlyVisible;
     }]];
     
     // Iterate over hiddenBehaviors and remove them from the dynamic animator and visible index path set
@@ -68,7 +66,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
         CGPoint itemCenter = item.center;
         UIAttachmentBehavior *springBehavior = [[UIAttachmentBehavior alloc] initWithItem:item attachedToAnchor:itemCenter];
         
-        springBehavior.length = 0.0f;
+        springBehavior.length = 1.0f;
         springBehavior.damping = 0.8f;
         springBehavior.frequency = 1.0f;
         
@@ -118,10 +116,10 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
         CGPoint itemCenter = item.center;
         
         if ( delta < 0 ) {
-            itemCenter.y = MAX(delta, delta * scrollResistance);
+            itemCenter.y += MAX(delta, delta * scrollResistance);
         }
         else {
-            itemCenter.y = MIN(delta, delta * scrollResistance);
+            itemCenter.y += MIN(delta, delta * scrollResistance);
         }
         
         item.center = itemCenter;

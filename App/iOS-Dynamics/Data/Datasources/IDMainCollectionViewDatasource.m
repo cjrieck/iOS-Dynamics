@@ -37,6 +37,7 @@ static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:0.227 green:0.340 blue:1.000 alpha:1.000];
+    cell.layer.cornerRadius = 90.0f / 2.0f;
     return cell;
 }
 
