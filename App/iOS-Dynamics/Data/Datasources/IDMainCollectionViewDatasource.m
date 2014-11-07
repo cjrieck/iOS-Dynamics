@@ -7,19 +7,32 @@
 //
 
 #import "IDMainCollectionViewDatasource.h"
+#import "IDRandomImageViewApplicator.h"
+#import "IDMainMenuCollectionViewCell.h"
 
 static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
-@interface IDMainCollectionViewDatasource ()
+static const double kIDCellAppearanceAnimationTime               = 0.75f;
+
+@interface IDMainCollectionViewDatasource () <IDRandomImageViewGetterDelegate>
+
+@property (strong, nonatomic) IDRandomImageViewApplicator *imageViewApplicator;
 
 @end
 
 @implementation IDMainCollectionViewDatasource
 
+- (instancetype)init {
+    self = [super init];
+    if ( self ) {
+        _imageViewApplicator = [[IDRandomImageViewApplicator alloc] initWithDelegate:self];
+    }
+    return self;
+}
+
 - (void)setMainDataCollectionView:(UICollectionView *)mainDataCollectionView
 {
-    // TODO: Set to custom cell
-    [mainDataCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier];
+    [mainDataCollectionView registerClass:[IDMainMenuCollectionViewCell class] forCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier];
     _mainDataCollectionView = mainDataCollectionView;
 }
 
@@ -30,15 +43,28 @@ static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 500; // TODO: Figure this out
+    return 100; // TODO: Figure this out
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor colorWithRed:0.227 green:0.340 blue:1.000 alpha:1.000];
-    cell.layer.cornerRadius = 90.0f / 2.0f;
+    IDMainMenuCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.clipsToBounds = YES;
+    cell.layer.opacity = 0.0f;
+    [self.imageViewApplicator applyRandomImageViewOnCell:cell];
     return cell;
+}
+
+- (void)imageFinishedApplyingOnCell:(UICollectionViewCell *)cell withDelay:(double)delay
+{
+    [UIView animateWithDuration:kIDCellAppearanceAnimationTime
+                          delay:delay
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         cell.layer.opacity = 1.0f;
+                     }
+                     completion:nil];
 }
 
 @end

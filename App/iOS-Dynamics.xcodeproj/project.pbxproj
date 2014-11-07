@@ -10,6 +10,72 @@
 	<string>46</string>
 	<key>objects</key>
 	<dict>
+		<key>36484D041A0CF4700066C058</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>IDMainMenuCollectionViewCell.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>36484D051A0CF4700066C058</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>IDMainMenuCollectionViewCell.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>36484D061A0CF4700066C058</key>
+		<dict>
+			<key>fileRef</key>
+			<string>36484D051A0CF4700066C058</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>36484D0A1A0CFDA70066C058</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>IDRandomImageViewApplicator.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>36484D0B1A0CFDA70066C058</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>IDRandomImageViewApplicator.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>36484D0C1A0CFDA70066C058</key>
+		<dict>
+			<key>fileRef</key>
+			<string>36484D0B1A0CFDA70066C058</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>3665BF571A0AAD7000FC0C27</key>
 		<dict>
 			<key>children</key>
@@ -99,6 +165,8 @@
 			<key>files</key>
 			<array>
 				<string>3665BF6C1A0AAD7000FC0C27</string>
+				<string>36484D0C1A0CFDA70066C058</string>
+				<string>36484D061A0CF4700066C058</string>
 				<string>3665BF961A0BA80500FC0C27</string>
 				<string>3665BF691A0AAD7000FC0C27</string>
 				<string>3665BF901A0AB0F900FC0C27</string>
@@ -896,7 +964,10 @@
 		<key>3665BF911A0AB51300FC0C27</key>
 		<dict>
 			<key>children</key>
-			<array/>
+			<array>
+				<string>36484D041A0CF4700066C058</string>
+				<string>36484D051A0CF4700066C058</string>
+			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
 			<key>path</key>
@@ -923,6 +994,8 @@
 			<key>children</key>
 			<array>
 				<string>3665BF921A0BA76000FC0C27</string>
+				<string>36484D0A1A0CFDA70066C058</string>
+				<string>36484D0B1A0CFDA70066C058</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
