@@ -58,9 +58,9 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     IDMainMenuCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor clearColor];
     cell.clipsToBounds = YES;
-    cell.layer.opacity = 0.0f;
+    cell.contentView.layer.opacity = 0.0f;
     [self.imageViewApplicator applyRandomImageViewOnCell:cell];
     return cell;
 }
@@ -74,7 +74,7 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
                           delay:delay
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         cell.layer.opacity = 1.0f;
+                         cell.contentView.layer.opacity = 1.0f;
                      }
                      completion:nil];
 }
