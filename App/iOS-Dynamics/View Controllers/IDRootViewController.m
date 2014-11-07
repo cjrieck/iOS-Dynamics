@@ -31,9 +31,14 @@
 - (void)loadView {
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    CAGradientLayer *gradientBackground = [CAGradientLayer layer];
+    gradientBackground.frame = self.view.bounds;
+    gradientBackground.colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:0.322 green:0.929 blue:0.78 alpha:1].CGColor, (id)[UIColor colorWithRed:0.353 green:0.784 blue:0.984 alpha:1].CGColor, nil];
+    [self.view.layer addSublayer:gradientBackground];
+    
     IDSpringFlowLayout *mainCollectionViewLayout = [[IDSpringFlowLayout alloc] init];
     UICollectionView *mainMenuCollectionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:mainCollectionViewLayout];
-    mainMenuCollectionView.backgroundColor = [UIColor blackColor]; // maybe put a gradient here?
+    mainMenuCollectionView.backgroundColor = [UIColor clearColor];
     
     self.mainCollectionViewDataSource.mainDataCollectionView = mainMenuCollectionView;
     
