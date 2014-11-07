@@ -8,15 +8,20 @@
 
 @protocol IDRandomImageViewGetterDelegate <NSObject>
 
-- (void)imageDidFinishLoadingWithCell:(UICollectionViewCell *)cell;
+- (void)imageFinishedApplyingOnCell:(UICollectionViewCell *)cell withDelay:(double)delay;
 
 @end
 
 @interface IDRandomImageViewApplicator : NSObject
 
-@property (weak, nonatomic)id<IDRandomImageViewGetterDelegate>delegate;
-
 - (instancetype)initWithDelegate:(id<IDRandomImageViewGetterDelegate>)delegate;
+
 - (void)applyRandomImageViewOnCell:(UICollectionViewCell *)cell;
+
+@end
+
+@interface IDRandomImageViewApplicator (IDUnavailable)
+
+- (instancetype)init __attribute__((unavailable("Use initWithDelegate: instead")));
 
 @end

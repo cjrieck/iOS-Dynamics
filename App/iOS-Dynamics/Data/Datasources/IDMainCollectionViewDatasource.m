@@ -12,9 +12,11 @@
 
 static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
+static const double kIDCellAppearanceAnimationTime               = 0.75f;
+
 @interface IDMainCollectionViewDatasource () <IDRandomImageViewGetterDelegate>
 
-@property (strong, nonatomic) IDRandomImageViewApplicator *imageViewGetter;
+@property (strong, nonatomic) IDRandomImageViewApplicator *imageViewApplicator;
 
 @end
 
@@ -23,14 +25,13 @@ static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 - (instancetype)init {
     self = [super init];
     if ( self ) {
-        _imageViewGetter = [[IDRandomImageViewApplicator alloc] initWithDelegate:self];
+        _imageViewApplicator = [[IDRandomImageViewApplicator alloc] initWithDelegate:self];
     }
     return self;
 }
 
 - (void)setMainDataCollectionView:(UICollectionView *)mainDataCollectionView
 {
-    // TODO: Set to custom cell
     [mainDataCollectionView registerClass:[IDMainMenuCollectionViewCell class] forCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier];
     _mainDataCollectionView = mainDataCollectionView;
 }
@@ -42,27 +43,28 @@ static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 500; // TODO: Figure this out
+    return 100; // TODO: Figure this out
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     IDMainMenuCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor colorWithRed:0.227 green:0.340 blue:1.000 alpha:1.000];
+    cell.backgroundColor = [UIColor whiteColor];
     cell.clipsToBounds = YES;
     cell.layer.opacity = 0.0f;
-    [self.imageViewGetter applyRandomImageViewOnCell:cell];
+    [self.imageViewApplicator applyRandomImageViewOnCell:cell];
     return cell;
 }
 
-#pragma mark - IDRandomImageViewGetter delegate
-
-- (void)imageDidFinishLoadingWithCell:(UICollectionViewCell *)cell
+- (void)imageFinishedApplyingOnCell:(UICollectionViewCell *)cell withDelay:(double)delay
 {
-    // TODO: Animate the cell to appear
-    [UIView animateWithDuration:1.0f animations:^{
-        cell.layer.opacity = 1.0f;
-    }];
+    [UIView animateWithDuration:kIDCellAppearanceAnimationTime
+                          delay:delay
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         cell.layer.opacity = 1.0f;
+                     }
+                     completion:nil];
 }
 
 @end
