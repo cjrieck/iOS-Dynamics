@@ -10,10 +10,15 @@
 #import "IDMainCollectionViewDatasource.h"
 #import "IDSpringFlowLayout.h"
 
+static NSString * const kIDRootViewControllerTitle = @"iOS Animations";
+static NSString * const kIDDelaySettingButtonTitleOff = @"Delay: Off"; // set it to 'Off' because we don't store setting value in NSSUserDefaults and will get reset on each launch
+static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
+
 @interface IDRootViewController ()
 
 @property (strong, nonatomic) IDMainCollectionViewDatasource *mainCollectionViewDataSource;
 
+@property (weak, nonatomic) UIBarButtonItem *delaySettingButton;
 @property (weak, nonatomic) UICollectionView *mainMenuCollectionView;
 
 @end
@@ -23,6 +28,7 @@
 - (instancetype)init {
     self = [super init];
     if ( self ) {
+        self.title = kIDRootViewControllerTitle;
         _mainCollectionViewDataSource = [[IDMainCollectionViewDatasource alloc] init];
     }
     return self;
@@ -45,6 +51,24 @@
     mainMenuCollectionView.dataSource = self.mainCollectionViewDataSource;
     [self.view addSubview:mainMenuCollectionView];
     _mainMenuCollectionView = mainMenuCollectionView;
+    
+    UIBarButtonItem *delaySettingButton = [[UIBarButtonItem alloc] initWithTitle:kIDDelaySettingButtonTitleOff
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(switchDelaySimulation)];
+    self.navigationItem.rightBarButtonItem = delaySettingButton;
+    _delaySettingButton = delaySettingButton;
+}
+
+- (void)switchDelaySimulation
+{
+    if ( [self.delaySettingButton.title isEqualToString:kIDDelaySettingButtonTitleOn] ) {
+        self.delaySettingButton.title = kIDDelaySettingButtonTitleOff;
+    }
+    else {
+        self.delaySettingButton.title = kIDDelaySettingButtonTitleOn;
+    }
+    [self.mainCollectionViewDataSource switchLoadDelaySetting];
 }
 
 @end

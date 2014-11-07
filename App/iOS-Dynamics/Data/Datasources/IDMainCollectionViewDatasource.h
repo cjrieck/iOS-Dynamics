@@ -10,4 +10,6 @@
 
 @property (weak, nonatomic) UICollectionView *mainDataCollectionView;
 
+- (void)switchLoadDelaySetting;
+
 @end

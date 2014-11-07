@@ -25,7 +25,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
     self = [super init];
     if ( self ) {
         self.minimumLineSpacing = 10.0f;
-        self.itemSize = CGSizeMake(90, 90);
+        self.itemSize = CGSizeMake(110, 110);
         self.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
         
         _springAnimator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self];

@@ -18,6 +18,8 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
 
 @property (strong, nonatomic) IDRandomImageViewApplicator *imageViewApplicator;
 
+@property (assign, nonatomic) BOOL loadDelayEnabled;
+
 @end
 
 @implementation IDMainCollectionViewDatasource
@@ -26,6 +28,7 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
     self = [super init];
     if ( self ) {
         _imageViewApplicator = [[IDRandomImageViewApplicator alloc] initWithDelegate:self];
+        _loadDelayEnabled = NO;
     }
     return self;
 }
@@ -34,6 +37,12 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
 {
     [mainDataCollectionView registerClass:[IDMainMenuCollectionViewCell class] forCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier];
     _mainDataCollectionView = mainDataCollectionView;
+}
+
+- (void)switchLoadDelaySetting
+{
+    [self.mainDataCollectionView reloadData];
+    self.loadDelayEnabled = !self.loadDelayEnabled;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -58,6 +67,9 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
 
 - (void)imageFinishedApplyingOnCell:(UICollectionViewCell *)cell withDelay:(double)delay
 {
+    if ( !self.loadDelayEnabled ) {
+        delay = 0.0f;
+    }
     [UIView animateWithDuration:kIDCellAppearanceAnimationTime
                           delay:delay
                         options:UIViewAnimationOptionAllowUserInteraction
