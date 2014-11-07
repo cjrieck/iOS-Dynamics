@@ -7,19 +7,31 @@
 //
 
 #import "IDMainCollectionViewDatasource.h"
+#import "IDRandomImageViewApplicator.h"
+#import "IDMainMenuCollectionViewCell.h"
 
 static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
-@interface IDMainCollectionViewDatasource ()
+@interface IDMainCollectionViewDatasource () <IDRandomImageViewGetterDelegate>
+
+@property (strong, nonatomic) IDRandomImageViewApplicator *imageViewGetter;
 
 @end
 
 @implementation IDMainCollectionViewDatasource
 
+- (instancetype)init {
+    self = [super init];
+    if ( self ) {
+        _imageViewGetter = [[IDRandomImageViewApplicator alloc] initWithDelegate:self];
+    }
+    return self;
+}
+
 - (void)setMainDataCollectionView:(UICollectionView *)mainDataCollectionView
 {
     // TODO: Set to custom cell
-    [mainDataCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier];
+    [mainDataCollectionView registerClass:[IDMainMenuCollectionViewCell class] forCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier];
     _mainDataCollectionView = mainDataCollectionView;
 }
 
@@ -35,10 +47,22 @@ static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
+    IDMainMenuCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:0.227 green:0.340 blue:1.000 alpha:1.000];
-    cell.layer.cornerRadius = 90.0f / 2.0f;
+    cell.clipsToBounds = YES;
+    cell.layer.opacity = 0.0f;
+    [self.imageViewGetter applyRandomImageViewOnCell:cell];
     return cell;
+}
+
+#pragma mark - IDRandomImageViewGetter delegate
+
+- (void)imageDidFinishLoadingWithCell:(UICollectionViewCell *)cell
+{
+    // TODO: Animate the cell to appear
+    [UIView animateWithDuration:1.0f animations:^{
+        cell.layer.opacity = 1.0f;
+    }];
 }
 
 @end
