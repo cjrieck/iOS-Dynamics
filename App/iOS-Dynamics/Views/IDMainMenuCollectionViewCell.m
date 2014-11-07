@@ -24,53 +24,28 @@
         
         const CGFloat radius = frame.size.width / 2.0f;
         self.layer.cornerRadius = radius;
-        NSLog(@"%@", NSStringFromCGRect(frame));
+        
+        UIBezierPath *circlePath = [UIBezierPath bezierPathWithRoundedRect:self.layer.bounds cornerRadius:radius];
+        
         CAShapeLayer *circleLayer = [CAShapeLayer layer];
-        circleLayer.frame = frame;
-        circleLayer.fillColor = [UIColor redColor].CGColor;
+        circleLayer.path = circlePath.CGPath;
+        circleLayer.frame = CGPathGetBoundingBox(circleLayer.path);
+        circleLayer.fillColor = [UIColor clearColor].CGColor;
+        circleLayer.strokeColor = [UIColor whiteColor].CGColor;
+        circleLayer.lineWidth = 2.0f;
+        
+        CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        drawAnimation.duration = 1.0f;
+        drawAnimation.repeatCount = 5.0f;
+        
+        drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+        drawAnimation.toValue = [NSNumber numberWithFloat:1.0f];
+        drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        
         [self.layer addSublayer:circleLayer];
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        _circleLayer = [CAShapeLayer layer];
-//        UIBezierPath *borderPath = [UIBezierPath bezierPathWithRoundedRect:frame byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(radius, radius)];
-////        [borderPath moveToPoint:CGPointMake(CGRectGetMidX(frame)-radius, CGRectGetMidY(frame)-radius)];
-////        [borderPath moveToPoint:CGPointMake(0.0, 0.0)	];
-//        _circleLayer.frame = CGRectMake(0, 0, 2.0*radius, 2.0*radius);
-//        _circleLayer.path = borderPath.CGPath;
-////        _circleLayer.position = CGPointMake(CGRectGetMidX(frame)-radius, CGRectGetMidY(frame)-radius);
-//        _circleLayer.position = self.center;
-//        _circleLayer.fillColor = [UIColor clearColor].CGColor;
-//        _circleLayer.strokeColor = [UIColor whiteColor].CGColor;
-//        _circleLayer.lineWidth = 10.0f;
-//        
-//        _drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-//        _drawAnimation.duration = 5.5f;
-//        _drawAnimation.repeatCount = 5.0f;
-//        
-//        _drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
-//        _drawAnimation.toValue = [NSNumber numberWithFloat:1.0f];
-//        _drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-//        
-//        [self.layer addSublayer:_circleLayer];
-        
-        [self beginLoadingAnimation];
+        [circleLayer addAnimation:drawAnimation forKey:nil];        
     }
     return self;
-}
-
-
-
-- (void)beginLoadingAnimation
-{
-    [self.circleLayer addAnimation:self.drawAnimation forKey:nil];
 }
 
 @end
