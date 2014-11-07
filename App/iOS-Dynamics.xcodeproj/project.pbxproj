@@ -211,6 +211,7 @@
 				<string>3665BF5C1A0AAD7000FC0C27</string>
 				<string>3665BF5D1A0AAD7000FC0C27</string>
 				<string>3665BF5E1A0AAD7000FC0C27</string>
+				<string>9B0AF12FB4AA7A10E254C66E</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -471,6 +472,7 @@
 				<string>3665BF751A0AAD7000FC0C27</string>
 				<string>3665BF761A0AAD7000FC0C27</string>
 				<string>3665BF771A0AAD7000FC0C27</string>
+				<string>82098D8AF4B7053D79F5AE4A</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1034,6 +1036,166 @@
 			<string>3665BF951A0BA80500FC0C27</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>82098D8AF4B7053D79F5AE4A</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Generate Mayday Flags</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/usr/bin/ruby</string>
+			<key>shellScript</key>
+			<string># encoding: utf-8
+Encoding.default_external = "utf-8"
+
+def abstract_flag_matcher_2414(file_path, file_contents)
+  
+return if File.fnmatch("*Pods/*", file_path)
+
+  line_number_to_warning_hash = lambda do 
+    lambda do |file_contents|
+  hash = {}
+  lines = file_contents.split("
+")
+  lines.each_with_index do |line, line_number| 
+    message = lambda do |line|
+  line =~ Regexp.new('(?-mix:\s+\/\/\s?TODO:)') ? "TODO:" : nil
+end
+.call(line)
+    hash[line_number + 1] = message if message
+  end
+  hash
+end
+.call(file_contents)
+  end.call
+
+  if line_number_to_warning_hash &amp;&amp; line_number_to_warning_hash.keys.count &gt; 0
+    final_warning_array = []
+    line_number_to_warning_hash.map do |line_number, warning_str|
+      final_warning_array &lt;&lt; "#{file_path}:#{line_number}: warning: #{warning_str} [Wmayday]"  
+    end
+    final_warning_array.join("
+")
+  else
+    false
+  end
+end
+
+
+Dir[ENV["SRCROOT"] + "/**/*.{m,h,swift}"].each do |filename|
+  # Could be a dir with .m, like Underscore.m's dir
+  if (File.file?(filename))
+    file = File.open(filename, 'r')
+    file_contents = file.read
+abstract_flag_output = abstract_flag_matcher_2414(file.path, file_contents)
+if abstract_flag_output &amp;&amp; true
+  puts abstract_flag_output
+  
+end
+
+  end
+end
+
+if @any_errors
+  exit(1)
+else
+  exit
+end
+
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>9B0AF12FB4AA7A10E254C66E</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Generate Mayday Flags</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/usr/bin/ruby</string>
+			<key>shellScript</key>
+			<string># encoding: utf-8
+Encoding.default_external = "utf-8"
+
+def abstract_flag_matcher_2414(file_path, file_contents)
+  
+return if File.fnmatch("*Pods/*", file_path)
+
+  line_number_to_warning_hash = lambda do 
+    lambda do |file_contents|
+  hash = {}
+  lines = file_contents.split("
+")
+  lines.each_with_index do |line, line_number| 
+    message = lambda do |line|
+  line =~ Regexp.new('(?-mix:\s+\/\/\s?TODO:)') ? "TODO:" : nil
+end
+.call(line)
+    hash[line_number + 1] = message if message
+  end
+  hash
+end
+.call(file_contents)
+  end.call
+
+  if line_number_to_warning_hash &amp;&amp; line_number_to_warning_hash.keys.count &gt; 0
+    final_warning_array = []
+    line_number_to_warning_hash.map do |line_number, warning_str|
+      final_warning_array &lt;&lt; "#{file_path}:#{line_number}: warning: #{warning_str} [Wmayday]"  
+    end
+    final_warning_array.join("
+")
+  else
+    false
+  end
+end
+
+
+Dir[ENV["SRCROOT"] + "/**/*.{m,h,swift}"].each do |filename|
+  # Could be a dir with .m, like Underscore.m's dir
+  if (File.file?(filename))
+    file = File.open(filename, 'r')
+    file_contents = file.read
+abstract_flag_output = abstract_flag_matcher_2414(file.path, file_contents)
+if abstract_flag_output &amp;&amp; true
+  puts abstract_flag_output
+  
+end
+
+  end
+end
+
+if @any_errors
+  exit(1)
+else
+  exit
+end
+
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>
