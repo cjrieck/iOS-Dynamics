@@ -24,7 +24,7 @@
     if ( self ) {
         
         const CGFloat strokeWidth = 3.0f;
-        const CGFloat radius = frame.size.width / 2.0f;
+        const CGFloat radius = CGRectGetWidth(frame) / 2.0f;
         self.layer.cornerRadius = radius;
         
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithRoundedRect:self.layer.bounds cornerRadius:radius];
