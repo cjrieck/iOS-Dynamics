@@ -47,8 +47,9 @@ static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
     mainMenuCollectionView.backgroundColor = [UIColor clearColor];
     
     self.mainCollectionViewDataSource.mainDataCollectionView = mainMenuCollectionView;
-    
     mainMenuCollectionView.dataSource = self.mainCollectionViewDataSource;
+    
+    [self setupMotionEffectOnView:mainMenuCollectionView];
     [self.view addSubview:mainMenuCollectionView];
     _mainMenuCollectionView = mainMenuCollectionView;
     
@@ -58,6 +59,25 @@ static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
                                                                           action:@selector(switchDelaySimulation)];
     self.navigationItem.rightBarButtonItem = delaySettingButton;
     _delaySettingButton = delaySettingButton;
+}
+
+- (void)setupMotionEffectOnView:(UIView *)targetView
+{
+    const NSValue *minimumMotionMovement = @(-20);
+    const NSValue *maximumMotionMovement = @(20);
+    
+    UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    horizontalMotionEffect.minimumRelativeValue = minimumMotionMovement;
+    horizontalMotionEffect.maximumRelativeValue = maximumMotionMovement;
+ 
+    UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    verticalMotionEffect.minimumRelativeValue = minimumMotionMovement;
+    verticalMotionEffect.maximumRelativeValue = maximumMotionMovement;
+    
+    UIMotionEffectGroup *motionEffectsGroup = [UIMotionEffectGroup new];
+    motionEffectsGroup.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
+    
+    [targetView addMotionEffect:motionEffectsGroup];
 }
 
 - (void)switchDelaySimulation
