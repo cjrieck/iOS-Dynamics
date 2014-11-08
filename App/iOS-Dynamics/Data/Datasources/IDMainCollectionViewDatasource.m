@@ -52,7 +52,7 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 100; // TODO: Figure this out
+    return 200;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -70,17 +70,15 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
     if ( !self.loadDelayEnabled ) {
         delay = 0.0f;
     }
-    [cell drawLoadingIndicatorForLength:delay];
     
+    [cell drawLoadingIndicatorForLength:delay];
     [UIView animateWithDuration:kIDCellAppearanceAnimationTime
                           delay:delay
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
                          cell.contentView.layer.opacity = 1.0f;
                      }
-                     completion:^(BOOL finished){
-                         [cell stopLoadingIndicator];
-                     }];
+                     completion:nil];
 }
 
 @end
