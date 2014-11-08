@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) CAShapeLayer *circleLayer;
 @property (strong, nonatomic) CABasicAnimation *drawAnimation;
+@property (strong, nonatomic) CABasicAnimation *rotateAnimation;
 
 @end
 
@@ -22,6 +23,7 @@
     self = [super initWithFrame:frame];
     if ( self ) {
         
+        const CGFloat strokeWidth = 3.0f;
         const CGFloat radius = frame.size.width / 2.0f;
         self.layer.cornerRadius = radius;
         
@@ -32,20 +34,40 @@
         circleLayer.frame = CGPathGetBoundingBox(circleLayer.path);
         circleLayer.fillColor = [UIColor clearColor].CGColor;
         circleLayer.strokeColor = [UIColor whiteColor].CGColor;
-        circleLayer.lineWidth = 2.0f;
+        circleLayer.lineWidth = strokeWidth;
         
         CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
         drawAnimation.duration = 1.0f;
-        drawAnimation.repeatCount = 5.0f;
-        
-        drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+        drawAnimation.fromValue = [NSNumber numberWithFloat:0.1f];
         drawAnimation.toValue = [NSNumber numberWithFloat:1.0f];
-        drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        
+        CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        [rotateAnimation setByValue:[NSNumber numberWithFloat:M_PI*2.0f]];
+        rotateAnimation.duration = 2.0f;
+        rotateAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+        rotateAnimation.toValue = [NSNumber numberWithFloat:M_PI*2.0f];
+        rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         
         [self.layer addSublayer:circleLayer];
-        [circleLayer addAnimation:drawAnimation forKey:nil];        
+        _circleLayer = circleLayer;
+        _drawAnimation = drawAnimation;
+        _rotateAnimation = rotateAnimation;
     }
     return self;
+}
+
+- (void)drawLoadingIndicatorForLength:(double)repeatInterval
+{
+    self.drawAnimation.repeatCount = ceil(repeatInterval);
+    self.rotateAnimation.repeatCount = ceil(repeatInterval/self.rotateAnimation.duration);
+    [self.circleLayer addAnimation:self.drawAnimation forKey:nil];
+    [self.circleLayer addAnimation:self.rotateAnimation forKey:nil];
+}
+
+- (void)stopLoadingIndicator
+{
+    [self.circleLayer removeAllAnimations];
 }
 
 @end

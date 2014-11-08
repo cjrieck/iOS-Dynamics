@@ -65,18 +65,22 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
     return cell;
 }
 
-- (void)imageFinishedApplyingOnCell:(UICollectionViewCell *)cell withDelay:(double)delay
+- (void)imageFinishedApplyingOnCell:(IDMainMenuCollectionViewCell *)cell withDelay:(double)delay
 {
     if ( !self.loadDelayEnabled ) {
         delay = 0.0f;
     }
+    [cell drawLoadingIndicatorForLength:delay];
+    
     [UIView animateWithDuration:kIDCellAppearanceAnimationTime
                           delay:delay
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
                          cell.contentView.layer.opacity = 1.0f;
                      }
-                     completion:nil];
+                     completion:^(BOOL finished){
+                         [cell stopLoadingIndicator];
+                     }];
 }
 
 @end
