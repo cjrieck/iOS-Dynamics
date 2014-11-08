@@ -58,25 +58,29 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     IDMainMenuCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIDMainCollectionViewCellReuseIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor clearColor];
     cell.clipsToBounds = YES;
-    cell.layer.opacity = 0.0f;
+    cell.contentView.layer.opacity = 0.0f;
     [self.imageViewApplicator applyRandomImageViewOnCell:cell];
     return cell;
 }
 
-- (void)imageFinishedApplyingOnCell:(UICollectionViewCell *)cell withDelay:(double)delay
+- (void)imageFinishedApplyingOnCell:(IDMainMenuCollectionViewCell *)cell withDelay:(double)delay
 {
     if ( !self.loadDelayEnabled ) {
         delay = 0.0f;
     }
+    [cell drawLoadingIndicatorForLength:delay];
+    
     [UIView animateWithDuration:kIDCellAppearanceAnimationTime
                           delay:delay
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         cell.layer.opacity = 1.0f;
+                         cell.contentView.layer.opacity = 1.0f;
                      }
-                     completion:nil];
+                     completion:^(BOOL finished){
+                         [cell stopLoadingIndicator];
+                     }];
 }
 
 @end

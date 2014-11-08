@@ -27,7 +27,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
         self.minimumLineSpacing = 10.0f;
         self.minimumInteritemSpacing = 5.0f;
         self.itemSize = CGSizeMake(90, 90);
-        self.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
+        self.sectionInset = UIEdgeInsetsMake(20, 10, 20, 10);
         
         _springAnimator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self];
         _visibleIndexPaths = [NSMutableSet set];
