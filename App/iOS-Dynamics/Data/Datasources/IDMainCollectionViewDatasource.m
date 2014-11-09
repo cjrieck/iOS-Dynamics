@@ -14,7 +14,7 @@ static NSString * const kIDMainCollectionViewCellReuseIdentifier = @"Cell";
 
 static const double kIDCellAppearanceAnimationTime               = 0.75f;
 
-@interface IDMainCollectionViewDatasource () <IDRandomImageViewGetterDelegate>
+@interface IDMainCollectionViewDatasource () <IDRandomImageViewApplicatorDelegate>
 
 @property (strong, nonatomic) IDRandomImageViewApplicator *imageViewApplicator;
 @property (assign, nonatomic) BOOL loadDelayEnabled;
@@ -38,11 +38,7 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
     _mainDataCollectionView = mainDataCollectionView;
 }
 
-- (void)switchLoadDelaySetting
-{
-    [self.mainDataCollectionView reloadData];
-    self.loadDelayEnabled = !self.loadDelayEnabled;
-}
+# pragma mark - UICollectionView datasource methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -66,6 +62,16 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
     [self.imageViewApplicator applyRandomImageViewOnCell:cell];
     return cell;
 }
+
+#pragma mark - Public methods
+
+- (void)switchLoadDelaySetting
+{
+    [self.mainDataCollectionView reloadData];
+    self.loadDelayEnabled = !self.loadDelayEnabled;
+}
+
+#pragma mark - IDRandomImageViewSetter delegate
 
 - (void)imageFinishedApplyingOnCell:(IDMainMenuCollectionViewCell *)cell withDelay:(double)delay
 {

@@ -1,5 +1,5 @@
 //
-//  IDRandomImageViewGetter.m
+//  IDRandomImageViewApplicator.m
 //  iOS-Dynamics
 //
 //  Created by Clayton Rieck on 11/7/14.
@@ -12,7 +12,7 @@ static const double kIDRandomTimeFactor = 10.0f; // This will keep the random ti
 
 @interface IDRandomImageViewApplicator ()
 
-@property (weak, nonatomic) id<IDRandomImageViewGetterDelegate>delegate;
+@property (weak, nonatomic) id<IDRandomImageViewApplicatorDelegate>delegate;
 
 @property (strong, nonatomic) NSMutableArray *imagesArray;
 
@@ -20,13 +20,13 @@ static const double kIDRandomTimeFactor = 10.0f; // This will keep the random ti
 
 @implementation IDRandomImageViewApplicator
 
-- (instancetype)initWithDelegate:(id<IDRandomImageViewGetterDelegate>)delegate {
+- (instancetype)initWithDelegate:(id<IDRandomImageViewApplicatorDelegate>)delegate {
     self = [super init];
     if ( self ) {
         _delegate = delegate;
         _imagesArray = [[NSMutableArray alloc] init];
         
-        // This is arbitrary. Chose 5 random picture from the internet to use
+        // This is arbitrary. Chose 5 random pictures from the internet to use
         for (int i = 1; i <= 5; i++) {
             NSString *imageName = [NSString stringWithFormat:@"img%i", i];
             UIImage *image = [UIImage imageNamed:imageName];
@@ -38,6 +38,8 @@ static const double kIDRandomTimeFactor = 10.0f; // This will keep the random ti
     return self;
 }
 
+#pragma mark - Private methods
+
 - (NSInteger)generateRandomNumberWithLowerBound:(NSInteger)lower upperBound:(NSInteger)upper
 {
     return ( (arc4random() % (upper-lower)) + lower ); // This is an implementation for a non-inclusive upper bound random number generator
@@ -47,6 +49,8 @@ static const double kIDRandomTimeFactor = 10.0f; // This will keep the random ti
 {
     return drand48() * factor;
 }
+
+#pragma mark - Public methods
 
 - (void)applyRandomImageViewOnCell:(UICollectionViewCell *)cell
 {

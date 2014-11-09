@@ -66,6 +66,8 @@ const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
     _rotateAnimation = rotateAnimation;
 }
 
+#pragma mark - Public methods
+
 - (void)drawLoadingIndicatorForLength:(double)repeatInterval
 {
     self.drawAnimation.repeatCount = ceil(repeatInterval);
@@ -97,11 +99,6 @@ const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
                                           completion:nil];
                      }];
     
-}
-
-- (void)animateTouchUp
-{
-    self.transform = CGAffineTransformIdentity;
 }
 
 - (void)wiggle

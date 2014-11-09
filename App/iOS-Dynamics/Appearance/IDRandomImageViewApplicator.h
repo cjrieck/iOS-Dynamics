@@ -1,12 +1,12 @@
 //
-//  IDRandomImageViewGetter.h
+//  IDRandomImageViewApplicator.h
 //  iOS-Dynamics
 //
 //  Created by Clayton Rieck on 11/7/14.
 //  Copyright (c) 2014 Clayton Rieck. All rights reserved.
 //
 
-@protocol IDRandomImageViewGetterDelegate <NSObject>
+@protocol IDRandomImageViewApplicatorDelegate <NSObject>
 
 - (void)imageFinishedApplyingOnCell:(UICollectionViewCell *)cell withDelay:(double)delay;
 
@@ -14,7 +14,7 @@
 
 @interface IDRandomImageViewApplicator : NSObject
 
-- (instancetype)initWithDelegate:(id<IDRandomImageViewGetterDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<IDRandomImageViewApplicatorDelegate>)delegate;
 
 - (void)applyRandomImageViewOnCell:(UICollectionViewCell *)cell;
 
