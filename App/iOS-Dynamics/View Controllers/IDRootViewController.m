@@ -9,12 +9,13 @@
 #import "IDRootViewController.h"
 #import "IDMainCollectionViewDatasource.h"
 #import "IDSpringFlowLayout.h"
+#import "IDMainMenuCollectionViewCell.h"
 
 static NSString * const kIDRootViewControllerTitle = @"iOS Animations";
 static NSString * const kIDDelaySettingButtonTitleOff = @"Delay: Off"; // set it to 'Off' because we don't store setting value in NSSUserDefaults and will get reset on each launch
 static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
 
-@interface IDRootViewController ()
+@interface IDRootViewController () <UICollectionViewDelegate>
 
 @property (strong, nonatomic) IDMainCollectionViewDatasource *mainCollectionViewDataSource;
 
@@ -50,6 +51,7 @@ static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
     
     self.mainCollectionViewDataSource.mainDataCollectionView = mainMenuCollectionView;
     mainMenuCollectionView.dataSource = self.mainCollectionViewDataSource;
+    mainMenuCollectionView.delegate = self;
     
     [self setupMotionEffectOnView:mainMenuCollectionView];
     [self.view addSubview:mainMenuCollectionView];
@@ -61,6 +63,15 @@ static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
                                                                           action:@selector(switchDelaySimulation)];
     self.navigationItem.rightBarButtonItem = delaySettingButton;
     _delaySettingButton = delaySettingButton;
+}
+
+#pragma mark - UICollectionView delegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    IDMainMenuCollectionViewCell *selectedCell = (IDMainMenuCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [selectedCell animateSelection];
+    [selectedCell wiggle];
 }
 
 - (void)setupMotionEffectOnView:(UIView *)targetView

@@ -8,6 +8,8 @@
 
 #import "IDMainMenuCollectionViewCell.h"
 
+const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
+
 @interface IDMainMenuCollectionViewCell ()
 
 @property (strong, nonatomic) CAShapeLayer *circleLayer;
@@ -23,6 +25,7 @@
     self = [super initWithFrame:frame];
     if ( self ) {
         const CGFloat strokeWidth = 3.0f;
+        const CGFloat loadingAnimationDuration = 1.0f;
         const CGFloat radius = CGRectGetWidth(frame) / 2.0f;
         self.layer.cornerRadius = radius;
         
@@ -36,17 +39,17 @@
         circleLayer.lineWidth = strokeWidth;
         
         CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        drawAnimation.duration = 1.0f;
+        drawAnimation.duration = loadingAnimationDuration;
         drawAnimation.fromValue = [NSNumber numberWithFloat:0.1f];
         drawAnimation.toValue = [NSNumber numberWithFloat:1.0f];
         drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         drawAnimation.removedOnCompletion = YES;
         
         CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-        [rotateAnimation setByValue:[NSNumber numberWithFloat:M_PI*2.0f]];
-        rotateAnimation.duration = 2.0f;
+        rotateAnimation.byValue = [NSNumber numberWithFloat:kIDFullCircularRotation];
+        rotateAnimation.duration = loadingAnimationDuration * 2.0f;
         rotateAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
-        rotateAnimation.toValue = [NSNumber numberWithFloat:M_PI*2.0f];
+        rotateAnimation.toValue = [NSNumber numberWithFloat:kIDFullCircularRotation];
         rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         rotateAnimation.removedOnCompletion = YES;
         
@@ -64,6 +67,56 @@
     self.rotateAnimation.repeatCount = ceil(repeatInterval/self.rotateAnimation.duration);
     [self.circleLayer addAnimation:self.drawAnimation forKey:nil];
     [self.circleLayer addAnimation:self.rotateAnimation forKey:nil];
+}
+
+- (void)animateSelection
+{
+    const CGFloat scaleFactor = 0.9f;
+    const CGFloat animationDuration = 0.1f;
+    const CGFloat animationDelay = 0.0f;
+    
+    [UIView animateWithDuration:animationDuration
+                          delay:animationDelay
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.transform = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
+                     }
+                     completion:^(BOOL finished){
+                         
+                         [UIView animateWithDuration:animationDuration
+                                               delay:animationDelay
+                                             options:UIViewAnimationOptionCurveLinear
+                                          animations:^{
+                                              self.transform = CGAffineTransformIdentity;
+                                          }
+                                          completion:nil];
+                     }];
+    
+}
+
+- (void)animateTouchUp
+{
+    self.transform = CGAffineTransformIdentity;
+}
+
+- (void)wiggle
+{
+    CABasicAnimation *wiggleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    wiggleAnimation.byValue = [NSNumber numberWithFloat:kIDFullCircularRotation];
+    wiggleAnimation.duration = 0.1;
+    wiggleAnimation.repeatCount = 2.0f;
+    wiggleAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+    wiggleAnimation.toValue = [NSNumber numberWithFloat:0.1f];
+    wiggleAnimation.autoreverses = YES;
+    wiggleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    wiggleAnimation.removedOnCompletion = YES;
+    
+    [self.layer addAnimation:wiggleAnimation forKey:nil];
+}
+
+- (void)forceStopAnimations
+{
+    [self.circleLayer removeAllAnimations];
 }
 
 @end
