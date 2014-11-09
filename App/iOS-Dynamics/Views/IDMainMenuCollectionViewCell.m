@@ -24,41 +24,46 @@ const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
 {
     self = [super initWithFrame:frame];
     if ( self ) {
-        const CGFloat strokeWidth = 3.0f;
-        const CGFloat loadingAnimationDuration = 1.0f;
-        const CGFloat radius = CGRectGetWidth(frame) / 2.0f;
-        self.layer.cornerRadius = radius;
-        
-        UIBezierPath *circlePath = [UIBezierPath bezierPathWithRoundedRect:self.layer.bounds cornerRadius:radius];
-        
-        CAShapeLayer *circleLayer = [CAShapeLayer layer];
-        circleLayer.path = circlePath.CGPath;
-        circleLayer.frame = CGPathGetBoundingBox(circleLayer.path);
-        circleLayer.fillColor = [UIColor clearColor].CGColor;
-        circleLayer.strokeColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.576 alpha:1].CGColor;
-        circleLayer.lineWidth = strokeWidth;
-        
-        CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        drawAnimation.duration = loadingAnimationDuration;
-        drawAnimation.fromValue = [NSNumber numberWithFloat:0.1f];
-        drawAnimation.toValue = [NSNumber numberWithFloat:1.0f];
-        drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        drawAnimation.removedOnCompletion = YES;
-        
-        CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-        rotateAnimation.byValue = [NSNumber numberWithFloat:kIDFullCircularRotation];
-        rotateAnimation.duration = loadingAnimationDuration * 2.0f;
-        rotateAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
-        rotateAnimation.toValue = [NSNumber numberWithFloat:kIDFullCircularRotation];
-        rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        rotateAnimation.removedOnCompletion = YES;
-        
-        [self.layer addSublayer:circleLayer];
-        _circleLayer = circleLayer;
-        _drawAnimation = drawAnimation;
-        _rotateAnimation = rotateAnimation;
+        [self setupCellAndAnimations];
     }
     return self;
+}
+
+- (void)setupCellAndAnimations
+{
+    const CGFloat strokeWidth = 3.0f;
+    const CGFloat loadingAnimationDuration = 1.0f;
+    const CGFloat radius = CGRectGetWidth(self.frame) / 2.0f;
+    self.layer.cornerRadius = radius;
+    
+    UIBezierPath *circlePath = [UIBezierPath bezierPathWithRoundedRect:self.layer.bounds cornerRadius:radius];
+    
+    CAShapeLayer *circleLayer = [CAShapeLayer layer];
+    circleLayer.path = circlePath.CGPath;
+    circleLayer.frame = CGPathGetBoundingBox(circleLayer.path);
+    circleLayer.fillColor = [UIColor clearColor].CGColor;
+    circleLayer.strokeColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.576 alpha:1].CGColor;
+    circleLayer.lineWidth = strokeWidth;
+    
+    CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    drawAnimation.duration = loadingAnimationDuration;
+    drawAnimation.fromValue = [NSNumber numberWithFloat:0.1f];
+    drawAnimation.toValue = [NSNumber numberWithFloat:1.0f];
+    drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    drawAnimation.removedOnCompletion = YES;
+    
+    CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotateAnimation.byValue = [NSNumber numberWithFloat:kIDFullCircularRotation];
+    rotateAnimation.duration = loadingAnimationDuration * 2.0f;
+    rotateAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+    rotateAnimation.toValue = [NSNumber numberWithFloat:kIDFullCircularRotation];
+    rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    rotateAnimation.removedOnCompletion = YES;
+    
+    [self.layer addSublayer:circleLayer];
+    _circleLayer = circleLayer;
+    _drawAnimation = drawAnimation;
+    _rotateAnimation = rotateAnimation;
 }
 
 - (void)drawLoadingIndicatorForLength:(double)repeatInterval

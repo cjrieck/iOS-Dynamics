@@ -17,7 +17,6 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
 @interface IDMainCollectionViewDatasource () <IDRandomImageViewGetterDelegate>
 
 @property (strong, nonatomic) IDRandomImageViewApplicator *imageViewApplicator;
-
 @property (assign, nonatomic) BOOL loadDelayEnabled;
 
 @end
@@ -28,7 +27,7 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
     self = [super init];
     if ( self ) {
         _imageViewApplicator = [[IDRandomImageViewApplicator alloc] initWithDelegate:self];
-        _loadDelayEnabled = NO;
+        _loadDelayEnabled = NO; // always set delayed simulation to 'off' on restart. Could have persisted in NSUserDefaults, but not relavent for this demo
     }
     return self;
 }
@@ -74,19 +73,14 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
         delay = 0.0f;
     }
     
-    UIImageView *viewToTransform;
-    for (UIView *subView in cell.contentView.subviews) {
-        if ( [subView isKindOfClass:[UIImageView class]] ) {
-            viewToTransform = (UIImageView *)subView;
-        }
-    }
-    
+    UIImageView *imageViewToTransform = [cell.contentView.subviews lastObject];
+
     [cell drawLoadingIndicatorForLength:delay];
     [UIView animateWithDuration:kIDCellAppearanceAnimationTime
                           delay:delay
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         viewToTransform.transform = CGAffineTransformIdentity;
+                         imageViewToTransform.transform = CGAffineTransformIdentity;
                          cell.contentView.layer.opacity = 1.0f;
                      }
                      completion:nil];
