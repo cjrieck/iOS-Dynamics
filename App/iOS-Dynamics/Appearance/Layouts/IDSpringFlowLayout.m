@@ -8,12 +8,14 @@
 
 #import "IDSpringFlowLayout.h"
 
-static const CGFloat kIDScrollResistanceFactor = 900.0f;
+/**
+ *  Controls 'springiness' of items. The lower the number, the more dramatic the effect is
+ */
+static const CGFloat kIDScrollResistanceFactor = 1000.0f;
 
 @interface IDSpringFlowLayout ()
 
 @property (strong, nonatomic) UIDynamicAnimator *springAnimator;
-
 @property (strong, nonatomic) NSMutableSet *visibleIndexPaths;
 @property (assign, nonatomic) CGFloat lastDelta;
 
@@ -51,11 +53,12 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
     }]];
     
     // Iterate over hiddenBehaviors and remove them from the dynamic animator and visible index path set
-    [hiddenBehaviors enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop){
+    for (id obj in hiddenBehaviors) {
         [self.springAnimator removeBehavior:obj];
         [self.visibleIndexPaths removeObject:[[[obj items] lastObject] indexPath]];
-    }];
+    };
     
+    // Create array of visible items now using the visibleIndexPaths set
     NSArray *newlyVisibleItems = [itemsInVisibleRect filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes *item, NSDictionary *bindings){
         BOOL currentlyVisible = [self.visibleIndexPaths containsObject:item.indexPath] == NO;
         return currentlyVisible;
@@ -63,7 +66,8 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
     
     CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
     
-    [newlyVisibleItems enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes *item, NSUInteger index, BOOL *stop){
+    // Attach a new spring behavior to items coming into view
+    for (UICollectionViewLayoutAttributes *item in newlyVisibleItems) {
         CGPoint itemCenter = item.center;
         UIAttachmentBehavior *springBehavior = [[UIAttachmentBehavior alloc] initWithItem:item attachedToAnchor:itemCenter];
         
@@ -71,6 +75,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
         springBehavior.damping = 0.8f;
         springBehavior.frequency = 1.0f;
         
+        // Handle distance between items. Controls the spring of the items.
         if (!CGPointEqualToPoint(CGPointZero, touchLocation)) {
             CGFloat distanceFromTouch = fabsf(touchLocation.y - springBehavior.anchorPoint.y);
             CGFloat scrollResistance = distanceFromTouch / kIDScrollResistanceFactor;
@@ -87,7 +92,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
         
         [self.springAnimator addBehavior:springBehavior];
         [self.visibleIndexPaths addObject:item.indexPath];
-    }];
+    };
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
@@ -109,7 +114,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
     
     CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
     
-    [self.springAnimator.behaviors enumerateObjectsUsingBlock:^(UIAttachmentBehavior *behavior, NSUInteger index, BOOL* stop){
+    for (UIAttachmentBehavior *behavior in self.springAnimator.behaviors) {
         CGFloat distanceFromTouch = fabsf(touchLocation.y - behavior.anchorPoint.y);
         CGFloat scrollResistance = distanceFromTouch / kIDScrollResistanceFactor;
         
@@ -125,7 +130,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
         
         item.center = itemCenter;
         [self.springAnimator updateItemUsingCurrentState:item];
-    }];
+    };
     
     return NO;
 }

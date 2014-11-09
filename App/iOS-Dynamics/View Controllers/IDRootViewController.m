@@ -74,6 +74,8 @@ static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
     [selectedCell wiggle];
 }
 
+#pragma mark - Private methods
+
 - (void)setupMotionEffectOnView:(UIView *)targetView
 {
     const NSValue *minimumMotionMovement = @(-20);
