@@ -8,7 +8,10 @@
 
 #import "IDSpringFlowLayout.h"
 
-static const CGFloat kIDScrollResistanceFactor = 900.0f;
+/**
+ *  Controls 'springiness' of items. The lower the number, the more dramatic the effect is
+ */
+static const CGFloat kIDScrollResistanceFactor = 1000.0f;
 
 @interface IDSpringFlowLayout ()
 
@@ -63,6 +66,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
     
     CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
     
+    // Attach a new spring behavior to items coming into view
     for (UICollectionViewLayoutAttributes *item in newlyVisibleItems) {
         CGPoint itemCenter = item.center;
         UIAttachmentBehavior *springBehavior = [[UIAttachmentBehavior alloc] initWithItem:item attachedToAnchor:itemCenter];
@@ -71,6 +75,7 @@ static const CGFloat kIDScrollResistanceFactor = 900.0f;
         springBehavior.damping = 0.8f;
         springBehavior.frequency = 1.0f;
         
+        // Handle distance between items. Controls the spring of the items.
         if (!CGPointEqualToPoint(CGPointZero, touchLocation)) {
             CGFloat distanceFromTouch = fabsf(touchLocation.y - springBehavior.anchorPoint.y);
             CGFloat scrollResistance = distanceFromTouch / kIDScrollResistanceFactor;
