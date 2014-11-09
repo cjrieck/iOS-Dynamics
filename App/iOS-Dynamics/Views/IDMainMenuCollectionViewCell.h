@@ -11,6 +11,5 @@
 - (void)drawLoadingIndicatorForLength:(double)repeatInterval;
 - (void)animateSelection;
 - (void)wiggle;
-- (void)forceStopAnimations;
 
 @end

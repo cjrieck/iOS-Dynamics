@@ -52,7 +52,10 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 200;
+    // Arbitrary number for demo purposes
+    // NOTE: Number can be as big as you like with very little performance hit.
+    // Cells are reused and UIKit Dynamic behaviors are only applied to visible cells
+    return 1000;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

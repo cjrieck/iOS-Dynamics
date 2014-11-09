@@ -101,6 +101,20 @@ static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
     else {
         self.delaySettingButton.title = kIDDelaySettingButtonTitleOn;
     }
+    
+    // Crude way of stopping animations... solely for simulation purposes. There will never be a time where a user would be
+    // able to switch between a slower connection to a connection where every single cell loads instantaneously. Also,
+    // you would never have to force stop animations on a connection switch. The load animation's time is equal to that of
+    // whatever the delay is. Just trying to keep the demo as bug-free as possible :)
+    NSArray *visibleIndexPaths = [self.mainMenuCollectionView indexPathsForVisibleItems];
+    for (NSIndexPath *visiblePath in visibleIndexPaths) {
+        IDMainMenuCollectionViewCell *visibleCell = (IDMainMenuCollectionViewCell *)[self.mainMenuCollectionView cellForItemAtIndexPath:visiblePath];
+        CAShapeLayer *circleLayer = (CAShapeLayer *)[visibleCell.layer.sublayers firstObject];
+        if ( circleLayer.animationKeys.count > 0 ) {
+            [circleLayer removeAllAnimations];
+        }
+    }
+    
     [self.mainCollectionViewDataSource switchLoadDelaySetting];
 }
 

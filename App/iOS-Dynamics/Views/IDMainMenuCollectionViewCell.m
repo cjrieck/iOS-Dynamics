@@ -65,8 +65,8 @@ const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
 {
     self.drawAnimation.repeatCount = ceil(repeatInterval);
     self.rotateAnimation.repeatCount = ceil(repeatInterval/self.rotateAnimation.duration);
-    [self.circleLayer addAnimation:self.drawAnimation forKey:nil];
-    [self.circleLayer addAnimation:self.rotateAnimation forKey:nil];
+    [self.circleLayer addAnimation:self.drawAnimation forKey:@"animateStroke"];
+    [self.circleLayer addAnimation:self.rotateAnimation forKey:@"animateRotation"];
 }
 
 - (void)animateSelection
@@ -112,11 +112,6 @@ const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
     wiggleAnimation.removedOnCompletion = YES;
     
     [self.layer addAnimation:wiggleAnimation forKey:nil];
-}
-
-- (void)forceStopAnimations
-{
-    [self.circleLayer removeAllAnimations];
 }
 
 @end
