@@ -71,11 +71,19 @@ static const double kIDCellAppearanceAnimationTime               = 0.75f;
         delay = 0.0f;
     }
     
+    UIImageView *viewToTransform;
+    for (UIView *subView in cell.contentView.subviews) {
+        if ( [subView isKindOfClass:[UIImageView class]] ) {
+            viewToTransform = (UIImageView *)subView;
+        }
+    }
+    
     [cell drawLoadingIndicatorForLength:delay];
     [UIView animateWithDuration:kIDCellAppearanceAnimationTime
                           delay:delay
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
+                         viewToTransform.transform = CGAffineTransformIdentity;
                          cell.contentView.layer.opacity = 1.0f;
                      }
                      completion:nil];

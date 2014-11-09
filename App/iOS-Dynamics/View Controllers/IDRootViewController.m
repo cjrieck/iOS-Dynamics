@@ -41,7 +41,7 @@ static NSString * const kIDDelaySettingButtonTitleOn = @"Delay: On";
     
     CAGradientLayer *gradientBackground = [CAGradientLayer layer];
     gradientBackground.frame = self.view.bounds;
-    gradientBackground.colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:0.29 green:0.29 blue:0.29 alpha:1].CGColor, (id)[UIColor colorWithRed:0.169 green:0.169 blue:0.169 alpha:1].CGColor, nil];
+    gradientBackground.colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:0.969 green:0.969 blue:0.969 alpha:1].CGColor, (id)[UIColor colorWithRed:0.843 green:0.843 blue:0.843 alpha:1].CGColor, nil];
     [self.view.layer addSublayer:gradientBackground];
     
     IDSpringFlowLayout *mainCollectionViewLayout = [[IDSpringFlowLayout alloc] init];

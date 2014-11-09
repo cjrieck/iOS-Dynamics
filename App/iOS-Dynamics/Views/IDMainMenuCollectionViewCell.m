@@ -32,7 +32,7 @@
         circleLayer.path = circlePath.CGPath;
         circleLayer.frame = CGPathGetBoundingBox(circleLayer.path);
         circleLayer.fillColor = [UIColor clearColor].CGColor;
-        circleLayer.strokeColor = [UIColor whiteColor].CGColor;
+        circleLayer.strokeColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.576 alpha:1].CGColor;
         circleLayer.lineWidth = strokeWidth;
         
         CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];

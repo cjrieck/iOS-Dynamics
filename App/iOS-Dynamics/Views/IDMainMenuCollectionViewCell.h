@@ -9,6 +9,5 @@
 @interface IDMainMenuCollectionViewCell : UICollectionViewCell
 
 - (void)drawLoadingIndicatorForLength:(double)repeatInterval;
-- (void)stopLoadingIndicator;
 
 @end

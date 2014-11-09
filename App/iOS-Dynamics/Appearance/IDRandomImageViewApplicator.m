@@ -53,6 +53,9 @@ static const double kIDRandomTimeFactor = 10.0f; // This will keep the random ti
     NSInteger randomIndex = [self generateRandomNumberWithLowerBound:0 upperBound:self.imagesArray.count];
     UIImage *randomImage = [self.imagesArray objectAtIndex:randomIndex];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:randomImage];
+    imageView.contentMode = UIViewContentModeCenter;
+    imageView.transform = CGAffineTransformMakeScale(4.0f, 4.0f);
+    imageView.center = cell.contentView.center;
     [cell.contentView addSubview:imageView];
 
     double delayInSeconds = [self generateRandomDelayTimeWithFactor:kIDRandomTimeFactor];
