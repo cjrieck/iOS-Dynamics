@@ -8,8 +8,6 @@
 
 #import "IDRandomImageViewApplicator.h"
 
-static const double kIDRandomTimeFactor = 10.0f; // This will keep the random time down to single digit seconds
-
 @interface IDRandomImageViewApplicator ()
 
 @property (weak, nonatomic) id<IDRandomImageViewApplicatorDelegate>delegate;
@@ -21,6 +19,8 @@ static const double kIDRandomTimeFactor = 10.0f; // This will keep the random ti
 @implementation IDRandomImageViewApplicator
 
 - (instancetype)initWithDelegate:(id<IDRandomImageViewApplicatorDelegate>)delegate {
+    NSParameterAssert(delegate);
+    
     self = [super init];
     if ( self ) {
         _delegate = delegate;
@@ -54,6 +54,8 @@ static const double kIDRandomTimeFactor = 10.0f; // This will keep the random ti
 
 - (void)applyRandomImageViewOnCell:(UICollectionViewCell *)cell
 {
+    NSParameterAssert(cell);
+    
     NSInteger randomIndex = [self generateRandomNumberWithLowerBound:0 upperBound:self.imagesArray.count];
     UIImage *randomImage = [self.imagesArray objectAtIndex:randomIndex];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:randomImage];
@@ -61,8 +63,9 @@ static const double kIDRandomTimeFactor = 10.0f; // This will keep the random ti
     imageView.transform = CGAffineTransformMakeScale(4.0f, 4.0f);
     imageView.center = cell.contentView.center;
     [cell.contentView addSubview:imageView];
-
-    double delayInSeconds = [self generateRandomDelayTimeWithFactor:kIDRandomTimeFactor];
+    
+    const double timeFactor = 10.0f; // This will keep the random time down to single digit seconds
+    double delayInSeconds = [self generateRandomDelayTimeWithFactor:timeFactor];
     [self.delegate imageFinishedApplyingOnCell:cell withDelay:delayInSeconds];
 }
 

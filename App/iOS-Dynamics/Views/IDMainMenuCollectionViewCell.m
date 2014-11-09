@@ -42,7 +42,7 @@ const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
     circleLayer.path = circlePath.CGPath;
     circleLayer.frame = CGPathGetBoundingBox(circleLayer.path);
     circleLayer.fillColor = [UIColor clearColor].CGColor;
-    circleLayer.strokeColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.576 alpha:1].CGColor;
+    circleLayer.strokeColor = [UIColor colorWithRed:0.741 green:0.765 blue:0.78 alpha:1].CGColor;
     circleLayer.lineWidth = strokeWidth;
     
     CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
@@ -70,8 +70,8 @@ const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
 
 - (void)drawLoadingIndicatorForLength:(double)repeatInterval
 {
-    self.drawAnimation.repeatCount = ceil(repeatInterval);
-    self.rotateAnimation.repeatCount = ceil(repeatInterval/self.rotateAnimation.duration);
+    self.drawAnimation.repeatCount = ceil(repeatInterval); // Get ceiling here so repeats stop on whole number AND animation doesn't end before image is loaded
+    self.rotateAnimation.repeatCount = ceil(repeatInterval / self.rotateAnimation.duration);
     [self.circleLayer addAnimation:self.drawAnimation forKey:@"animateStroke"];
     [self.circleLayer addAnimation:self.rotateAnimation forKey:@"animateRotation"];
 }
@@ -113,7 +113,7 @@ const static CGFloat kIDFullCircularRotation = M_PI * 2.0f;
     wiggleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     wiggleAnimation.removedOnCompletion = YES;
     
-    [self.layer addAnimation:wiggleAnimation forKey:nil];
+    [self.layer addAnimation:wiggleAnimation forKey:@"wiggle"];
 }
 
 @end
