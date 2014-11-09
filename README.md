@@ -10,6 +10,8 @@ Mini app that shows vairous animations. Included are
 - Shrink, expand, wiggle effect on cells when selected! (Because why not?)
 - UIView animations
 
+**NOTE:** It's best to run this on a device. The simulator displays some lag whereas the device gives the animations more justice.
+
 Colors were meant to be more nuetral. Had a more 'mature' theme in mind, yet mature is relative in this context.
 
 Borders are used around the cells to impose some degree of separation from the background and the UIMotionEffects further emphasize this.
