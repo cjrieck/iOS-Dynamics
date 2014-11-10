@@ -1,6 +1,8 @@
 iOS-Dynamics
 ============
 
+[![Build Status](https://travis-ci.org/cjrieck/iOS-Dynamics.svg?branch=master)](https://travis-ci.org/cjrieck/iOS-Dynamics)
+
 Mini app that shows vairous animations. Included are
 
 - UIKit Dynamics (spring behavior on the collection view when scroll)
