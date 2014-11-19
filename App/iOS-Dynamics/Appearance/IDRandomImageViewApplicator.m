@@ -55,18 +55,23 @@
 - (void)applyRandomImageViewOnCell:(UICollectionViewCell *)cell
 {
     NSParameterAssert(cell);
+
+    dispatch_queue_t imageLoaderQueue = dispatch_queue_create("imageLoaderQueue", NULL);
+    dispatch_async(imageLoaderQueue, ^{
+        NSInteger randomIndex = [self generateRandomNumberWithLowerBound:0 upperBound:self.imagesArray.count];
+        UIImage *randomImage = [self.imagesArray objectAtIndex:randomIndex];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:randomImage];
+        imageView.contentMode = UIViewContentModeCenter;
     
-    NSInteger randomIndex = [self generateRandomNumberWithLowerBound:0 upperBound:self.imagesArray.count];
-    UIImage *randomImage = [self.imagesArray objectAtIndex:randomIndex];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:randomImage];
-    imageView.contentMode = UIViewContentModeCenter;
-    imageView.transform = CGAffineTransformMakeScale(4.0f, 4.0f);
-    imageView.center = cell.contentView.center;
-    [cell.contentView addSubview:imageView];
-    
-    const double timeFactor = 10.0f; // This will keep the random time down to single digit seconds
-    double delayInSeconds = [self generateRandomDelayTimeWithFactor:timeFactor];
-    [self.delegate imageFinishedApplyingOnCell:cell withDelay:delayInSeconds];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            imageView.transform = CGAffineTransformMakeScale(4.0f, 4.0f);
+            imageView.center = cell.contentView.center;
+            [cell.contentView addSubview:imageView];
+            const double timeFactor = 10.0f; // This will keep the random time down to single digit seconds
+            double delayInSeconds = [self generateRandomDelayTimeWithFactor:timeFactor];
+            [self.delegate imageFinishedApplyingOnCell:cell withDelay:delayInSeconds];
+        });
+    });
 }
 
 @end
